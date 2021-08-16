@@ -23,11 +23,10 @@ const Checker = () => {
       setBotero(restJson);
       const txevent = await readOnlyContract.filters.Transfer(null, null, Math.floor(searchQuery));
       const eventx = await readOnlyContract.queryFilter(txevent);
-      setTransfers(eventx);
-      console.log(eventx);
-    }
-  }
+      setTransfers(eventx.reverse());
 
+    }
+  };
   const classes = useStyles();
 
   return (
@@ -61,7 +60,7 @@ const Checker = () => {
             <Typography variant='h4' gutterBottom>
               Transactions
             </Typography>
-              {transfers.map((object) => (
+              {transfers.slice(0,10).map((object) => (
                 <Box key={object.id} display='flex' justifyContent='space-between' mb={1}>
                   <Typography component='span'>From: {object.args[0]}</Typography>
                   <Typography component='span'>To: {object.args[1]}</Typography>
